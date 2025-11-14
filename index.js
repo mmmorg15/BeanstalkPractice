@@ -55,7 +55,7 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // process.env.PORT is when you deploy and 3000 is for test
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log("website running"))
+
 
 /* Session middleware (Middleware is code that runs between the time the request comes
 to the server and the time the response is sent back. It allows you to intercept and
@@ -214,9 +214,6 @@ app.get("/logout", (req, res) => {
 });
 
 
-app.listen(port, () => {
-    console.log("The server is listening");
-});
 
 
 app.get('/test', (req, res) => {
@@ -316,6 +313,9 @@ app.post("/deleteUser/:id", (req, res) => {
 });
 
 
+app.listen(port, () => {
+    console.log("The server is listening");
+});
 
 
 
