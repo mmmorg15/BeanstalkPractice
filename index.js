@@ -98,16 +98,19 @@ app.use(
 //     }
 // });
 
+if (process.env.RDS_HOSTNAME) {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+}
 const knex = require("knex")({
-    client: "pg",
-    connection: {
-        host: process.env.RDS_HOSTNAME || "awseb-e-mumpdqsemx-stack-awsebrdsdatabase-xqwhzbsem7kf.cyjdgkggv8nb.us-east-1.rds.amazonaws.com",
-        user: process.env.RDS_USERNAME || "postgres",
-        password: process.env.RDS_PASSWORD || "pgadmin4",
-        database: process.env.RDS_DB_NAME || "postgres",
-        port: process.env.RDS_PORT || 5432,
-        ssl: process.env.DB_SSL ? {rejectUnauthorized: false} : false 
-    }
+  client: "pg",
+  connection: {
+    host: process.env.RDS_HOSTNAME || "localhost",
+    user: process.env.RDS_USERNAME || "postgres",
+    password: process.env.RDS_PASSWORD || "",
+    database: process.env.RDS_DB_NAME || "postgres",
+    port: process.env.RDS_PORT || 5432,
+    ssl: process.env.DB_SSL ? {rejectUnauthorized: false} : false
+  }
 });
 
 // Tells Express how to read form data sent in the body of a request
