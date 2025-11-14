@@ -113,6 +113,35 @@ const knex = require("knex")({
   }
 });
 
+// 1) See which DB/user the server is *actually* connected to
+app.get("/debug-db-info", async (req, res) => {
+  try {
+    const result = await knex.raw("SELECT current_database() AS db, current_user AS user");
+    res.json({
+      db_from_sql: result.rows[0],
+      db_from_env: {
+        RDS_DB_NAME: process.env.RDS_DB_NAME,
+        RDS_HOSTNAME: process.env.RDS_HOSTNAME,
+        RDS_USERNAME: process.env.RDS_USERNAME,
+        // DO NOT log RDS_PASSWORD for security
+      }
+    });
+  } catch (err) {
+    console.error("DEBUG /debug-db-info error:", err);
+    res.status(500).send("DB info error: " + err.message);
+  }
+});
+// 2) Dump all users (id + username) so we know what the server sees
+app.get("/debug-users", async (req, res) => {
+  try {
+    const users = await knex("users").select("*");  // grab all columns
+    res.json(users);
+  } catch (err) {
+    console.error("DEBUG /debug-users error:", err);
+    res.status(500).send("Users debug error: " + err.message);
+  }
+});
+
 // Tells Express how to read form data sent in the body of a request
 app.use(express.urlencoded({extended: true}));
 
