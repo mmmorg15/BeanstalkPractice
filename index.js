@@ -87,14 +87,26 @@ app.use(
     )
 );
 
+// const knex = require("knex")({
+//     client: "pg",
+//     connection: {
+//         host : process.env.DB_HOST || "localhost",
+//         user : process.env.DB_USER || "postgres",
+//         password : process.env.DB_PASSWORD || "pgadmin4",
+//         database : process.env.DB_NAME || "foodisus",
+//         port : process.env.DB_PORT || 5432  // PostgreSQL 16 typically uses port 5434
+//     }
+// });
+
 const knex = require("knex")({
     client: "pg",
     connection: {
-        host : process.env.DB_HOST || "localhost",
-        user : process.env.DB_USER || "postgres",
-        password : process.env.DB_PASSWORD || "pgadmin4",
-        database : process.env.DB_NAME || "foodisus",
-        port : process.env.DB_PORT || 5432  // PostgreSQL 16 typically uses port 5434
+        host: process.env.RDS_HOSTNAME || "localhost",
+        user: process.env.RDS_USERNAME || "postgres",
+        password: process.env.RDS_PASSWORD || "pgadmin4",
+        database: process.env.RDS_DB_NAME || "foodisus",
+        port: process.env.RDS_PORT || 5432,
+        ssl: process.env.DB_SSL ? {rejectUnauthorized: false} : false 
     }
 });
 
