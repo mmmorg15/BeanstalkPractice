@@ -101,7 +101,7 @@ app.use(
 const knex = require("knex")({
     client: "pg",
     connection: {
-        host: process.env.RDS_HOSTNAME || "localhost",
+        host: process.env.RDS_HOSTNAME || "awseb-e-mumpdqsemx-stack-awsebrdsdatabase-xqwhzbsem7kf.cyjdgkggv8nb.us-east-1.rds.amazonaws.com",
         user: process.env.RDS_USERNAME || "postgres",
         password: process.env.RDS_PASSWORD || "pgadmin4",
         database: process.env.RDS_DB_NAME || "postgres",
